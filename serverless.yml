@@ -15,6 +15,9 @@ functions:
   double:
     handler: handler.double
 
+  doubleBigNumbers:
+    handler: handler.doubleBigNumbers
+
 stepFunctions:
   stateMachines:
     simple-maths:
@@ -27,9 +30,29 @@ stepFunctions:
             Type: Task
             Resource:
               Fn::GetAtt: [add, Arn]
-            Next: Double
+            Next: IsBigNumber
+          IsBigNumber:
+            Type: Choice
+            Choices:
+              - Variable: $
+                NumericGreaterThan: 50
+                Next: DoubleBigNumbers
+            Default: Double
           Double:
             Type: Task
             Resource:
               Fn::GetAtt: [double, Arn]
+            End: true
+            Retry:
+              - ErrorEquals: [NumberIsTooBig]
+                MaxAttempts: 0
+              - ErrorEquals: [States.ALL]
+                MaxAttempts: 3
+            Catch:
+              - ErrorEquals: [NumberIsTooBig]
+                Next: DoubleBigNumbers
+          DoubleBigNumbers:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [doubleBigNumbers, Arn]
             End: true
