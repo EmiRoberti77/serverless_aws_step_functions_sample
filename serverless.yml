@@ -9,19 +9,27 @@ provider:
   runtime: nodejs20.x
 
 functions:
-  hello:
-    handler: handler.hello
+  add:
+    handler: handler.add
+
+  double:
+    handler: handler.double
 
 stepFunctions:
   stateMachines:
-    hellostepfunc1:
-      name: hello
+    simple-maths:
+      name: simple-maths
       definition:
-        Comment: "Hello World example"
-        StartAt: SayHello
+        Comment: "Example to demonstrate chaining functions"
+        StartAt: Add
         States:
-          SayHello:
+          Add:
             Type: Task
             Resource:
-              Fn::GetAtt: [hello, Arn]
+              Fn::GetAtt: [add, Arn]
+            Next: Double
+          Double:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [double, Arn]
             End: true
