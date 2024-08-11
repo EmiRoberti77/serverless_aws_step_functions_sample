@@ -25,6 +25,38 @@ npm i -D serverless-step-functions
 
 link to documentation - https://www.npmjs.com/package/serverless-step-functions
 
+sample command to run the stepfunction
+```
+sls invoke stepf --name simple-maths --data '{"x":12, "y":12}'
+```
+
+## sample out output ( this is from two functions being chained )
+
+```
+user@emi-MacBook-Pro stepfunctionhelloworld % sls invoke stepf --name simple-maths --data '{"x":12, "y":12}'
+
+(node:34523) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+.
+{
+  executionArn: 'arn:aws:states:us-east-1:XXXXXXXXXX:execution:simple-maths:98e092db-d9b3-49be-a084-dc924e76ff7c',
+  stateMachineArn: 'arn:aws:states:us-east-1:XXXXXXXXXX:stateMachine:simple-maths',
+  name: '98e092db-d9b3-49be-a084-dc924e76ff7c',
+  status: 'SUCCEEDED',
+  startDate: 2024-08-11T14:52:38.285Z,
+  stopDate: 2024-08-11T14:52:40.048Z,
+  input: '{"x":12, "y":12}',
+  inputDetails: { included: true },
+  output: '48',
+  outputDetails: { included: true },
+  redriveCount: 0,
+  redriveStatus: 'NOT_REDRIVABLE',
+  redriveStatusReason: 'Execution is SUCCEEDED and cannot be redriven'
+}
+```
+
+
+
 ### Deployment
 
 In order to deploy the example, you need to run the following command:
