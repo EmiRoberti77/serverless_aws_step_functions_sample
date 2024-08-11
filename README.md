@@ -17,6 +17,16 @@ This template demonstrates how to deploy a simple NodeJS function running on AWS
 
 ## Usage
 
+## NOTE
+
+this project requires serverless-step-functions plugin
+
+```
+npm i -D serverless-step-functions
+```
+
+link to documentation - https://www.npmjs.com/package/serverless-step-functions
+
 ### Deployment
 
 In order to deploy the example, you need to run the following command:
