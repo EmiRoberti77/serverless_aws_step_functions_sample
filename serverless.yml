@@ -1,0 +1,27 @@
+org: datamotion
+service: stepfunctionhelloworld
+
+plugins:
+  - serverless-step-functions
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+functions:
+  hello:
+    handler: handler.hello
+
+stepFunctions:
+  stateMachines:
+    hellostepfunc1:
+      name: hello
+      definition:
+        Comment: "Hello World example"
+        StartAt: SayHello
+        States:
+          SayHello:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [hello, Arn]
+            End: true
