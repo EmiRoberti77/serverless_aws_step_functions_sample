@@ -1,0 +1,42 @@
+{
+  "Comment": "A description of my state machine",
+  "StartAt": "DoThemAll",
+  "States": {
+    "DoThemAll": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "Add",
+          "States": {
+            "Add": {
+              "Type": "Task",
+              "Resource": "arn:aws:lambda:us-east-1:432599188850:function:stepfunctionhelloworld-dev-add",
+              "Next": "Double"
+            },
+            "Double": {
+              "Type": "Task",
+              "Resource": "arn:aws:lambda:us-east-1:432599188850:function:stepfunctionhelloworld-dev-double",
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "PickX",
+          "States": {
+            "PickX": {
+              "Type": "Pass",
+              "InputPath": "$.x",
+              "Next": "Double"
+            },
+            "Double": {
+              "Type": "Task",
+              "Resource": "arn:aws:lambda:us-east-1:432599188850:function:stepfunctionhelloworld-dev-double",
+              "End": true
+            }
+          }
+        }
+      ],
+      "End": true
+    }
+  }
+}
