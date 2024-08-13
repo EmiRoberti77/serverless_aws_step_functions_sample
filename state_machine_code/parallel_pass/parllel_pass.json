@@ -1,0 +1,38 @@
+{
+  "StartAt": "ParallelState",
+  "States": {
+    "ParallelState": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "AddZ",
+          "States": {
+            "AddZ": {
+              "Type": "Pass",
+              "Result": 42,
+              "ResultPath": "$.z",
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "OverrideX",
+          "States": {
+            "OverrideX": {
+              "Type": "Pass",
+              "Result": 42,
+              "ResultPath": "$.x",
+              "End": true
+            }
+          }
+        }
+      ],
+      "Next": "Head"
+    },
+    "Head": {
+      "Type": "Pass",
+      "InputPath": "$",
+      "End": true
+    }
+  }
+}
